@@ -1,5 +1,6 @@
 {
-	"name": "Visual Text",
+	"name": "visual-text",
+	"publisher": "LRacoci",
 	"displayName": "visual-text",
 	"description": "A Visual Studio Code extension using word2vec to syntax-highlight natural",
 	"version": "0.0.1",
@@ -10,7 +11,7 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onCommand:extension.visualText"
+		"*"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
