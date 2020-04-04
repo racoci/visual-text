@@ -8,29 +8,25 @@ export function activate(context: ExtensionContext) {
     window.onDidChangeActiveTextEditor((editor) => {
         if(!editor) { return; }
         const allText: string = editor.document.getText();
-        const regex = /[\s]/gi;
-        var result, indices: number[] = [];
+        const regex = /\w+/gi;
+        var result, regExpExecArrays: RegExpExecArray[] = [];
         while( (result = regex.exec(allText)) ) {
-            indices.push(result.index);
+            regExpExecArrays.push(result);
         }
-        const colors: string[] = [
-            "#F00", "#FF0", "#0F0", "#0FF", "#00F", "#F0F"
-        ];
-        window.showInformationMessage(`Number of words${indices.length}`)
-        indices.forEach((_, k) => {
-            if(k !== 0){
-                const first: Position = editor.document.positionAt(indices[k-1]);
-                const last: Position = editor.document.positionAt(indices[k]);
-                editor.setDecorations(
-                    window.createTextEditorDecorationType(
-                        {
-                            color: colors[k%colors.length]
-                        }
-                    ), 
-                    [new Range(first, last)]
-                );
-            }
-        })
+        const colors: string[] = ["#F70", "#FA0", "#FF0", "#AF0", "#0B0", "#0BB", "#08F", "#55F", "#95F", "#F5F"];
+        window.showInformationMessage(`Number of words${regExpExecArrays.length}`);
+        regExpExecArrays.forEach((regExpExecArray, k) => {
+            const first: Position = editor.document.positionAt(regExpExecArray.index);
+            const last: Position = editor.document.positionAt(regExpExecArray.index + regExpExecArray[0].length);
+            editor.setDecorations(
+                window.createTextEditorDecorationType(
+                    {
+                        color: colors[k % colors.length]
+                    }
+                ), 
+                [new Range(first, last)]
+            );
+        });
     });
 }
 
